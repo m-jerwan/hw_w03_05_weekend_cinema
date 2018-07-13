@@ -17,5 +17,5 @@ CREATE TABLE films(
 CREATE TABLE tickets(
   id VARCHAR(255),
   customer_id INT4 REFERENCES customers(id) ON DELETE CASCADE,
-  movie_id INT4 REFERENCES movies(id) ON DELETE CASCADE
+  movie_id INT4 REFERENCES films(id) ON DELETE CASCADE
 );
