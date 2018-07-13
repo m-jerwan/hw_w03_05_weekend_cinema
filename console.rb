@@ -1,16 +1,8 @@
 require_relative('model/customer')
 require_relative('model/ticket')
 require_relative('model/film')
-# require("pry/buybug")
+require 'pry-byebug'
 
-film_01 = Film.new({
-  'title' => 'Inglorious Basterds',
-  'price' => '10'
-})
-film_02 = Film.new({
-  'title' => 'Pulp Fiction',
-  'price' => '8'
-})
 
 customer_01 = Customer.new({
   'name' => 'Joanna',
@@ -27,17 +19,31 @@ customer_03 = Customer.new({
   'funds' => '10'
   })
 
+  customer_01.save
+  customer_02.save
+  customer_03.save
+
+film_01 = Film.new({
+  'title' => 'Inglorious Basterds',
+  'price' => '10'
+})
+film_02 = Film.new({
+  'title' => 'Pulp Fiction',
+  'price' => '8'
+})
+
+
+film_01.save
+film_02.save
+
+
 ticket_01 = Ticket.new({
   'customer_id' => customer_01.id,
-  'film.id' => film_01.id
+  'film_id' => film_01.id
   })
 
 
-p film_01
-p film_02
 
-p customer_01
-p customer_02
-p customer_03
-
-p ticket_01 #IDs not coming back as no SAVE method yet
+ ticket_01.save
+ binding.pry
+ nil
