@@ -2,7 +2,9 @@ require 'pry-byebug'
 
 
 class Film
-  attr_accessor :id
+  attr_reader :id
+  attr_accessor :price
+
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @title = options['title']
@@ -21,11 +23,28 @@ class Film
     films = SqlRunner.run(sql)
     result = films.map { |e| Film.new(e)  }
     return result
- end
+  end
 
-def self.delete_all
-  sql = "DELETE FROM films"
-  SqlRunner.run(sql)
-end
+  def self.delete_all
+    sql = "DELETE FROM films"
+    SqlRunner.run(sql)
+  end
+
+  def update
+    sql = 'UPDATE films SET(title, price) =($1,$2) WHERE id = $3'
+    values = [@title, @price, @id]
+    SqlRunner.run(sql,values)
+  end
+
+  def customers
+    sql = 'SELECT * FROM customers
+    INNER JOIN tickets
+    ON tickets.customer_id = customers.id
+    WHERE film_id = $1'
+    values = [@id]
+    customers = SqlRunner.run(sql, values)
+    return customers.map {|e| Customer.new(e)}
+
+  end
 
 end
