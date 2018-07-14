@@ -7,8 +7,11 @@ class Ticket
     @id = options['id'].to_i if options['id']
     @customer_id = options['customer_id']
     @film_id = options['film_id']
-    p customer = Ticket.findcustomer(@customer_id)
-
+    #customer is being charged at moment of ticket creation:
+    customer = Ticket.findcustomer(@customer_id)
+    film = Ticket.findfilm(@film_id)
+    customer['funds'] = customer['funds'].to_i - film['price'].to_i
+    customer['funds'] = customer['funds'].to_s #simpler way?
   end
 
   def save()
@@ -30,18 +33,17 @@ class Ticket
   end
 
   def self.findcustomer(id)
-    sql = 'SELECT * FROM customers
-    WHERE id = $1'
+    sql = 'SELECT * FROM customers WHERE id = $1'
     values = [id]
-    customers = SqlRunner.run(sql, values).first
-    return customers
+    customer = SqlRunner.run(sql, values).first
+    return customer
   end
 
   def self.findfilm(id)
     sql = 'SELECT * FROM films WHERE id = $1'
     values = [id]
-    films = SqlRunner.run
-
+    film = SqlRunner.run(sql, values).first
+    return film
   end
 
 end
