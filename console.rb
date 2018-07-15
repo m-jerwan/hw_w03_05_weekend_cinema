@@ -51,9 +51,9 @@ ticket_01 = Ticket.new({
   'customer_id' => customer_01.id,
   'film_id' => film_01.id
   })
- ticket_01.save
- ticket_01.customer_id = customer_02.id
- ticket_01.update
+ticket_01.save
+ticket_01.customer_id = customer_02.id
+ticket_01.update
 
 ticket_02 = Ticket.new({
   'customer_id' => customer_01.id,
@@ -73,17 +73,20 @@ ticket_04 = Ticket.new({
   })
  ticket_04.save
 
+#Show which films a customer has booked to see, 
+ customer_02.films
+#and see which customers are coming to see one film.
+ film_01.customers
 
+ #Buying tickets should decrease the funds of the customer by the price
+  # - ticket depretiation is imbeded in ticket initialization
+  # which is a bad idea. 
 
+#  Check how many tickets were bought by a customer
+  customer_02.films.length
+  #                   ---OR----
+  customer_02.how_many_tickets
 
+  #Check how many customers are going to watch a certain film
+  film_01.customers.length
 
-
-
-# p Customer.all
-# p Film.all
-# p Ticket.all
-
-# film_01.customers
-
- # binding.pry
- # nil

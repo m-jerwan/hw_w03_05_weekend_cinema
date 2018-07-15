@@ -10,8 +10,10 @@ class Ticket
     #customer is being charged at moment of ticket creation:
     customer = Ticket.findcustomer(@customer_id)
     film = Ticket.findfilm(@film_id)
+    binding.pry
     customer['funds'] = customer['funds'].to_i - film['price'].to_i
     customer['funds'] = customer['funds'].to_s #simpler way?
+    binding.pry
   end
 
   def save()
@@ -45,5 +47,7 @@ class Ticket
     film = SqlRunner.run(sql, values).first
     return film
   end
+
+
 
 end

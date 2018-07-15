@@ -1,4 +1,6 @@
 require_relative('../db/sql_runner.rb')
+require_relative('ticketInfo.rb')
+
 require 'pry-byebug'
 
 class Customer
@@ -41,14 +43,20 @@ class Customer
 
 def films
   sql = 'SELECT * FROM films
-INNER JOIN tickets
-ON tickets.film_id = films.id
-WHERE customer_id = $1'
-values= [@id]
-films = SqlRunner.run(sql, values)
-result = films.map { |e| Film.new(e)}
-return result
+    INNER JOIN tickets
+    ON tickets.film_id = films.id
+    WHERE customer_id = $1'
+  values= [@id]
+  films = SqlRunner.run(sql, values)
+  result = films.map { |e| Film.new(e)}
+  return result
 end
 
-
+def how_many_tickets
+  sql = 'SELECT * FROM tickets WHERE customer_id = $1'
+  values =[@id]
+  tickets = SqlRunner.run(sql, values)
+  result = (tickets.map{|e| TicketInfo.new(e)}).length
+  return result
+end
 end
