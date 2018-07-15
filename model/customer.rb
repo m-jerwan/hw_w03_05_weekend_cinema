@@ -7,7 +7,6 @@ class Customer
   attr_reader :id
   attr_accessor :name, :funds
 
-
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @name = options['name']
@@ -52,7 +51,7 @@ def films
   return result
 end
 
-def how_many_tickets
+def how_many_tickets_info
   sql = 'SELECT * FROM tickets WHERE customer_id = $1'
   values =[@id]
   tickets = SqlRunner.run(sql, values)

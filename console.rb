@@ -1,7 +1,8 @@
 require_relative('model/customer')
 require_relative('model/ticket')
 require_relative('model/film')
-require 'pry-byebug'
+require_relative('model/screening')
+require ('pry-byebug')
 
 Customer.delete_all
 Film.delete_all
@@ -45,14 +46,25 @@ film_02.save
 
 film_02.price = 6
 film_02.update
-# p film_02
+
+screening_01 = Screening.new ({
+  'time' => '18:00',
+  'film_id' => film_01.id
+})
+screening_01.save
+
+screening_02 = Screening.new({
+  'time' => '20:00',
+  'film_id' => film_02.id
+})
+screening_02.save
 
 ticket_01 = Ticket.new({
   'customer_id' => customer_01.id,
   'film_id' => film_01.id
   })
 ticket_01.save
-ticket_01.customer_id = customer_02.id
+ticket_01.customer_id = customer_02.id 
 ticket_01.update
 
 ticket_02 = Ticket.new({
@@ -85,8 +97,10 @@ ticket_04 = Ticket.new({
 #  Check how many tickets were bought by a customer
   customer_02.films.length
   #                   ---OR----
-  customer_02.how_many_tickets
+  customer_02.how_many_tickets_info
 
   #Check how many customers are going to watch a certain film
   film_01.customers.length
 
+  #Create a screenings table that lets us know what time films are showing
+  Screening.show_all

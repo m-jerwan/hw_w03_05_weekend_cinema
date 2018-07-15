@@ -1,4 +1,5 @@
 require 'pry-byebug'
+require_relative('cinema_mechanics')
 
 class Ticket
   attr_accessor :customer_id, :film_id
@@ -7,13 +8,7 @@ class Ticket
     @id = options['id'].to_i if options['id']
     @customer_id = options['customer_id']
     @film_id = options['film_id']
-    #customer is being charged at moment of ticket creation:
-    customer = Ticket.findcustomer(@customer_id)
-    film = Ticket.findfilm(@film_id)
-    binding.pry
-    customer['funds'] = customer['funds'].to_i - film['price'].to_i
-    customer['funds'] = customer['funds'].to_s #simpler way?
-    binding.pry
+    CinemaMechanics.selling_ticket(@customer_id, @film_id)
   end
 
   def save()
